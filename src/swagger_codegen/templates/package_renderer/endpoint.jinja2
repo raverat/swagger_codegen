@@ -5,7 +5,7 @@ def make_request(self: BaseApi,
 {% for argument in endpoint.arguments %}
     {{ endpoint.make_variable_name(argument['name']) }}: {{ argument['type'] }} {%- if 'default' in argument %} = {{ argument['default'] }}{% endif %},
 {% endfor %}
-) -> {{ endpoint.return_type }}:
+) -> typing.Union[{{ endpoint.return_type }}, typing.Awaitable[{{ endpoint.return_type }}]]:
     {% if endpoint.docstring %}"""{{ endpoint.docstring }}"""{% endif %}
 
     {% if endpoint.body_request %}
